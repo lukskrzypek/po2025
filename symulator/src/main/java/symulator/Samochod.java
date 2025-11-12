@@ -29,10 +29,10 @@ public class Samochod {
 
     }
     public float getWaga(){
-
+        return skrzynia.getWaga()+silnik.getWaga()+700;
     }
     public float getAktPredkosc(){
-
+        return skrzynia.getAktualnePrzelozenie()*skrzynia.getAktualnyBieg();
     }
 
     public Pozycja getAktualnaPozycja() {
@@ -40,5 +40,8 @@ public class Samochod {
     }
     public SkrzyniaBiegow getSkrzynia() {
         return skrzynia;
+    }
+    public Silnik getSilnik() {
+        return silnik;
     }
 }

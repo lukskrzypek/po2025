@@ -11,23 +11,32 @@ public class SkrzyniaBiegow extends Komponent{
         this.aktualnyBieg = 0;
         this.iloscBiegow = iloscBiegow;
         this.sprzeglo = sprzeglo;
+        this.aktualnePrzelozenie = 10;
     }
 
     public void zwiekszBieg(){
-        if (aktualnyBieg<iloscBiegow){
-            aktualnyBieg++;
+        if(sprzeglo.getStanSprzegla()){
+            if (aktualnyBieg<iloscBiegow){
+                aktualnyBieg++;
+            }
         }
     }
     public void zmniejszBieg(){
-        if (aktualnyBieg>=2){
-            aktualnyBieg--;
+        if (sprzeglo.getStanSprzegla()){
+            if (aktualnyBieg>=1){
+                aktualnyBieg--;
+            }
         }
     }
     public int getAktualnyBieg() {
         return aktualnyBieg;
     }
-    public boolean getAktualnePrzelozenie() {
+
+    public float getAktualnePrzelozenie() {
         return aktualnePrzelozenie;
     }
 
+    public Sprzeglo getSprzeglo() {
+        return sprzeglo;
+    }
 }
