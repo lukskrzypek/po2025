@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
+import symulator.*;
 
 
 public class CarGui {
@@ -14,33 +14,76 @@ public class CarGui {
     public Button wlaczButton;
     public ComboBox comboBox_samochody;
     public Button wylaczButton;
+
     public TextField textSamochodModel;
     public TextField textSamochodNrRejestracyjny;
     public TextField textSamochodWaga;
     public TextField textSamochodPredkosc;
+
     public TextField textSkrzyniaNazwa;
     public TextField textSkrzyniaCena;
     public TextField textSkrzyniaWaga;
     public TextField textSkrzyniaBieg;
 
-    public void onWlacz(ActionEvent actionEvent) {
+    public Button zwiekszBiegButton;
+    public Button zmniejszBiegButton;
 
+    public TextField textSprzegloNazwa;
+    public TextField textSprzegloCena;
+    public TextField textSprzegloWaga;
+    public TextField textSprzegloStan;
+
+    public TextField textSilnikNazwa;
+    public TextField textSilnikCena;
+    public TextField textSilnikWaga;
+    public TextField textSilnikObroty;
+
+    public void onWlacz(ActionEvent actionEvent) {
+        System.out.println("Wlacz");
     }
 
     public void onWylacz(ActionEvent actionEvent) {
 
     }
 
-    /*@FXML
-    public void initialize() {
+    public void dodajNowy(ActionEvent actionEvent) {
+        String sprzegloNazwa = textSprzegloNazwa.getText();
+        String sprzegloWagaString = textSprzegloWaga.getText();
+        float sprzegloWaga = Float.parseFloat(sprzegloWagaString);
+        String sprzegloCenaString = textSprzegloCena.getText();
+        float sprzegloCena = Float.parseFloat(sprzegloCenaString);
 
-        Pozycja pozycja_test= new Pozycja(0,0);
-        Sprzeglo sprzeglo_test = new Sprzeglo("sprzeglo_test", 10, 300 );
-        SkrzyniaBiegow skrzynia_test = new SkrzyniaBiegow("skrzynia_test", 20, 500, 5, sprzeglo_test);
-        Silnik silnik_test = new Silnik("silnik_test", 100, 1000, 5000);
-        Samochod samochod_test = new Samochod("KR 12345", "test", 150, pozycja_test, silnik_test, skrzynia_test);
+        String skrzyniaNazwa = textSkrzyniaNazwa.getText();
+        String skrzyniaWagaString = textSkrzyniaWaga.getText();
+        float skrzyniaWaga =  Float.parseFloat(skrzyniaWagaString);
+        String skrzyniaCenaString = textSkrzyniaCena.getText();
+        float skrzyniaCena = Float.parseFloat(skrzyniaCenaString);
+
+        String silnikNazwa = textSilnikNazwa.getText();
+        String silnikWagaString = textSilnikWaga.getText();
+        float silnikWaga = Float.parseFloat(silnikWagaString);
+        String silnikCenaString = textSilnikCena.getText();
+        float silnikCena = Float.parseFloat(silnikCenaString);
+        String silnikObrotyString = textSilnikObroty.getText();
+        int silnikObroty = Integer.parseInt(silnikObrotyString);
+
+        String samochodNrRejest = textSamochodNrRejestracyjny.getText();
+        String samochodModel = textSamochodModel.getText();
+        String samochodPredkoscString = textSamochodPredkosc.getText();
+        float samochodPredkosc = Float.parseFloat(samochodPredkoscString);
+        Pozycja samochodPozycja = new Pozycja(0,0);
+
+
+
+        Sprzeglo noweSprzeglo = new Sprzeglo(sprzegloNazwa, sprzegloWaga, sprzegloCena );
+        SkrzyniaBiegow nowaSkrzynia = new SkrzyniaBiegow(skrzyniaNazwa, skrzyniaWaga, skrzyniaCena, noweSprzeglo);
+        Silnik nowySilnik = new Silnik(silnikNazwa, silnikWaga, silnikCena, silnikObroty);
+        Samochod nowySamochod = new Samochod(samochodNrRejest, samochodModel, samochodPredkosc, samochodPozycja, nowySilnik, nowaSkrzynia);
+
+
 
     }
 
-     */
+
+
 }

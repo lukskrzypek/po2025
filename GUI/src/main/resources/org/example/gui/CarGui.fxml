@@ -105,8 +105,8 @@
 
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
-                                                <Button mnemonicParsing="false" text="Zwiększ bieg" />
-                                                <Button mnemonicParsing="false" text="Zmniejsz bieg" />
+                                                <Button mnemonicParsing="false" text="Zwiększ bieg" fx:id="zwiekszBiegButton" />
+                                                <Button mnemonicParsing="false" text="Zmniejsz bieg" fx:id="zmniejszBiegButton" />
                                             </children>
                                             <VBox.margin>
                                                 <Insets top="5.0" />
@@ -124,25 +124,25 @@
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
                                                 <Label prefWidth="100.0" text="Nazwa" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField HBox.hgrow="ALWAYS" fx:id="textSilnikNazwa"/>
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
                                                 <Label prefWidth="100.0" text="Cena" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField HBox.hgrow="ALWAYS" fx:id="textSilnikCena"/>
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
                                                 <Label prefWidth="100.0" text="Waga" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField HBox.hgrow="ALWAYS" fx:id="textSilnikWaga"/>
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
                                                 <Label prefWidth="100.0" text="Obroty" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField HBox.hgrow="ALWAYS" fx:id="textSilnikObroty"/>
                                             </children>
                                         </HBox>
 
@@ -167,25 +167,25 @@
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
                                                 <Label prefWidth="100.0" text="Nazwa" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField HBox.hgrow="ALWAYS" fx:id="textSprzegloNazwa" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
                                                 <Label prefWidth="100.0" text="Cena" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField HBox.hgrow="ALWAYS" fx:id="textSprzegloCena" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
-                                                <Label prefWidth="100.0" text="Waga" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <Label prefWidth="100.0" text="Waga"  />
+                                                <TextField HBox.hgrow="ALWAYS" fx:id="textSprzegloWaga" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                                             <children>
                                                 <Label prefWidth="100.0" text="Stan" />
-                                                <TextField HBox.hgrow="ALWAYS" />
+                                                <TextField HBox.hgrow="ALWAYS"  fx:id="textSprzegloStan"/>
                                             </children>
                                         </HBox>
 
@@ -220,8 +220,8 @@
                         <Pane HBox.hgrow="ALWAYS" />
                         <Label text="Samochód:" />
                         <ComboBox prefWidth="150.0" fx:id="comboBox_samochody"/>
-                        <Button mnemonicParsing="false" text="Dodaj nowy" />
-                        <Button mnemonicParsing="false" text="Usuń" />
+                        <Button mnemonicParsing="false" text="Dodaj nowy" fx:id="dodajNowy" onAction="#dodajNowy"/>
+                        <Button mnemonicParsing="false" text="Usuń" fx:id="usun" />
                     </children>
                 </HBox>
 

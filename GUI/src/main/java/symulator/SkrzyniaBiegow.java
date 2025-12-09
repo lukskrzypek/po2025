@@ -6,10 +6,10 @@ public class SkrzyniaBiegow extends Komponent{
     private float aktualnePrzelozenie;
     private Sprzeglo sprzeglo;
 
-    public SkrzyniaBiegow(String nazwa, float waga, float cena, int iloscBiegow, Sprzeglo sprzeglo) {
+    public SkrzyniaBiegow(String nazwa, float waga, float cena, Sprzeglo sprzeglo) {
         super(nazwa, waga, cena);
         this.aktualnyBieg = 0;
-        this.iloscBiegow = iloscBiegow;
+        this.iloscBiegow = 5;
         this.sprzeglo = sprzeglo;
         this.aktualnePrzelozenie = 10;
     }
