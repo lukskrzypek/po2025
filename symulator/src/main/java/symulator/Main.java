@@ -18,6 +18,7 @@ static void main() {
     samochod_test.getSkrzynia().zwiekszBieg();
     samochod_test.getSkrzynia().zwiekszBieg();
 
+
     Pozycja cel= new Pozycja(20,15);
     pozycja_test.przemieszczenie(cel, samochod_test.getAktPredkosc());
     pozycja_test.przemieszczenie(cel, samochod_test.getAktPredkosc());
@@ -27,5 +28,6 @@ static void main() {
     pozycja_test.przemieszczenie(cel, samochod_test.getAktPredkosc());
     pozycja_test.przemieszczenie(cel, samochod_test.getAktPredkosc());
     pozycja_test.przemieszczenie(cel, samochod_test.getAktPredkosc());
+
 
 }

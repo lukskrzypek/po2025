@@ -1,89 +1,206 @@
 package org.example.gui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import symulator.*;
+
+import java.io.IOException;
 
 
 public class CarGui {
 
-    public Button wlaczButton;
-    public ComboBox comboBox_samochody;
-    public Button wylaczButton;
+    @FXML private ImageView imageCarView;
+    @FXML private ComboBox<Samochod> comboBoxSamochody;
 
-    public TextField textSamochodModel;
-    public TextField textSamochodNrRejestracyjny;
-    public TextField textSamochodWaga;
-    public TextField textSamochodPredkosc;
+    @FXML private TextField textSamochodModel;
+    @FXML private TextField textSamochodNrRejestracyjny;
+    @FXML private TextField textSamochodWaga;
+    @FXML private TextField textSamochodPredkosc;
 
-    public TextField textSkrzyniaNazwa;
-    public TextField textSkrzyniaCena;
-    public TextField textSkrzyniaWaga;
-    public TextField textSkrzyniaBieg;
+    @FXML private TextField textSkrzyniaNazwa;
+    @FXML private TextField textSkrzyniaCena;
+    @FXML private TextField textSkrzyniaWaga;
+    @FXML private TextField textSkrzyniaBieg;
 
-    public Button zwiekszBiegButton;
-    public Button zmniejszBiegButton;
 
-    public TextField textSprzegloNazwa;
-    public TextField textSprzegloCena;
-    public TextField textSprzegloWaga;
-    public TextField textSprzegloStan;
+    @FXML private TextField textSprzegloNazwa;
+    @FXML private TextField textSprzegloCena;
+    @FXML private TextField textSprzegloWaga;
+    @FXML private TextField textSprzegloStan;
 
-    public TextField textSilnikNazwa;
-    public TextField textSilnikCena;
-    public TextField textSilnikWaga;
-    public TextField textSilnikObroty;
+    @FXML private TextField textSilnikNazwa;
+    @FXML private TextField textSilnikCena;
+    @FXML private TextField textSilnikWaga;
+    @FXML private TextField textSilnikObroty;
+
+    Samochod samochod;
+
+    private ObservableList<Samochod> samochody = FXCollections.observableArrayList();
+
+    @FXML public void initialize() {
+        Image carImage = new Image(getClass().getResource("/images/car.png").toExternalForm());
+
+        System.out.println("Image width: " + carImage.getWidth() + ", height: " + carImage.getHeight());
+        imageCarView.setImage(carImage);
+
+        imageCarView.setFitWidth(100);
+        imageCarView.setFitHeight(100);
+
+        imageCarView.setTranslateX(0);
+        imageCarView.setTranslateY(0);
+
+
+
+        comboBoxSamochody.setItems(samochody);
+        comboBoxSamochody.setOnAction(event -> {
+            samochod = comboBoxSamochody.getSelectionModel().getSelectedItem();
+            refresh();
+                    });
+
+    }
 
     public void onWlacz(ActionEvent actionEvent) {
-        System.out.println("Wlacz");
+        samochod.wlacz();
+        refresh();
     }
 
     public void onWylacz(ActionEvent actionEvent) {
+        samochod.wylacz();
+        refresh();
+    }
+
+    void refresh(){
+        textSamochodModel.setText(String.valueOf(samochod.getModel()));
+        textSamochodNrRejestracyjny.setText(String.valueOf(samochod.getNrRejest()));
+        textSamochodWaga.setText(String.valueOf(samochod.getWaga()));
+        textSamochodPredkosc.setText(String.valueOf(samochod.getAktPredkosc()));
+
+        textSkrzyniaNazwa.setText(String.valueOf(samochod.getSkrzynia().getNazwa()));
+        textSkrzyniaCena.setText(String.valueOf(samochod.getSkrzynia().getCena()));
+        textSkrzyniaWaga.setText(String.valueOf(samochod.getSkrzynia().getWaga()));
+        textSkrzyniaBieg.setText(String.valueOf(samochod.getSkrzynia().getAktualnyBieg()));
+
+        textSprzegloNazwa.setText(String.valueOf(samochod.getSkrzynia().getSprzeglo().getNazwa()));
+        textSprzegloCena.setText(String.valueOf(samochod.getSkrzynia().getSprzeglo().getCena()));
+        textSprzegloWaga.setText(String.valueOf(samochod.getSkrzynia().getSprzeglo().getWaga()));
+        textSprzegloStan.setText(String.valueOf(samochod.getSkrzynia().getSprzeglo().getStanSprzegla()));
+
+        textSilnikNazwa.setText(String.valueOf(samochod.getSilnik().getNazwa()));
+        textSilnikCena.setText(String.valueOf(samochod.getSilnik().getCena()));
+        textSilnikWaga.setText(String.valueOf(samochod.getSilnik().getWaga()));
+        textSilnikObroty.setText(String.valueOf(samochod.getSilnik().getObroty()));
 
     }
 
-    public void dodajNowy(ActionEvent actionEvent) {
-        String sprzegloNazwa = textSprzegloNazwa.getText();
-        String sprzegloWagaString = textSprzegloWaga.getText();
-        float sprzegloWaga = Float.parseFloat(sprzegloWagaString);
-        String sprzegloCenaString = textSprzegloCena.getText();
-        float sprzegloCena = Float.parseFloat(sprzegloCenaString);
+    public void openAddCarWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DodajSamochod.fxml"));
 
-        String skrzyniaNazwa = textSkrzyniaNazwa.getText();
-        String skrzyniaWagaString = textSkrzyniaWaga.getText();
-        float skrzyniaWaga =  Float.parseFloat(skrzyniaWagaString);
-        String skrzyniaCenaString = textSkrzyniaCena.getText();
-        float skrzyniaCena = Float.parseFloat(skrzyniaCenaString);
+        Parent root = loader.load();
+        DodajSamochodController secondaryController = loader.getController();
+        secondaryController.setMainController(this);
 
-        String silnikNazwa = textSilnikNazwa.getText();
-        String silnikWagaString = textSilnikWaga.getText();
-        float silnikWaga = Float.parseFloat(silnikWagaString);
-        String silnikCenaString = textSilnikCena.getText();
-        float silnikCena = Float.parseFloat(silnikCenaString);
-        String silnikObrotyString = textSilnikObroty.getText();
-        int silnikObroty = Integer.parseInt(silnikObrotyString);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Dodaj nowy samochód");
+        stage.show();
+    }
 
-        String samochodNrRejest = textSamochodNrRejestracyjny.getText();
-        String samochodModel = textSamochodModel.getText();
-        String samochodPredkoscString = textSamochodPredkosc.getText();
-        float samochodPredkosc = Float.parseFloat(samochodPredkoscString);
-        Pozycja samochodPozycja = new Pozycja(0,0);
+    public void onUsunSamochod(ActionEvent actionEvent) {
+        samochody.remove(samochod);
+        comboBoxSamochody.getSelectionModel().selectFirst();
+        refresh();
+    }
 
-
-
-        Sprzeglo noweSprzeglo = new Sprzeglo(sprzegloNazwa, sprzegloWaga, sprzegloCena );
-        SkrzyniaBiegow nowaSkrzynia = new SkrzyniaBiegow(skrzyniaNazwa, skrzyniaWaga, skrzyniaCena, noweSprzeglo);
-        Silnik nowySilnik = new Silnik(silnikNazwa, silnikWaga, silnikCena, silnikObroty);
-        Samochod nowySamochod = new Samochod(samochodNrRejest, samochodModel, samochodPredkosc, samochodPozycja, nowySilnik, nowaSkrzynia);
-
-
-
+    public void dodajSamochod(Samochod nowySamochod) {
+        samochody.add(nowySamochod);
+        comboBoxSamochody.getSelectionModel().select(nowySamochod);
+        refresh();
     }
 
 
+    public void onZwiekszBieg(ActionEvent actionEvent) {
+        Silnik silnik = samochod.getSilnik();
+        SkrzyniaBiegow skrzynia = samochod.getSkrzynia();
+        if (skrzynia.getSprzeglo().getStanSprzegla()) {
+            if (skrzynia.getAktualnyBieg() == 0) {
+                skrzynia.zwiekszBieg();
+            } else if (skrzynia.getAktualnyBieg() < skrzynia.getIloscBiegow() && silnik.getObroty()>silnik.getMaxObroty()*0.3) {
+                float nowePrzelozenie = (float) (skrzynia.getAktualnyBieg() + 1) / skrzynia.getIloscBiegow();
+                int doceloweObroty = (int) (silnik.getObroty() * skrzynia.getAktualnePrzelozenie() / nowePrzelozenie);
+                if (doceloweObroty > silnik.getMinObroty()) {
+                    skrzynia.zwiekszBieg();
+                    silnik.zmniejszObroty(silnik.getObroty() - doceloweObroty);
+                }
+            }
+        }
+        refresh();
+    }
 
+
+    public void onZmniejszBieg(ActionEvent actionEvent) {
+        Silnik silnik = samochod.getSilnik();
+        SkrzyniaBiegow skrzynia = samochod.getSkrzynia();
+        if (skrzynia.getSprzeglo().getStanSprzegla()){
+            if(skrzynia.getAktualnyBieg()>1){
+                float nowePrzelozenie = (float) (skrzynia.getAktualnyBieg()-1)/skrzynia.getIloscBiegow();
+                int doceloweObroty= (int) (silnik.getObroty()*skrzynia.getAktualnePrzelozenie()/nowePrzelozenie);
+                if(doceloweObroty<=silnik.getMaxObroty()) {
+                    skrzynia.zmniejszBieg();
+                    silnik.zwiekszObroty(doceloweObroty-silnik.getObroty());
+                }
+            } else if (skrzynia.getAktualnyBieg()==1) {
+                if (silnik.getObroty() >= silnik.getMinObroty() && silnik.getObroty() <= silnik.getMinObroty()+500){
+                    skrzynia.zmniejszBieg();
+                    silnik.zmniejszObroty(silnik.getObroty()-silnik.getMinObroty());
+                }
+            }
+        }
+        refresh();
+    }
+
+    public void onDodajGazu(ActionEvent actionEvent) {
+        if (!samochod.getSkrzynia().getSprzeglo().getStanSprzegla() && samochod.getSkrzynia().getAktualnyBieg() != 0) {
+            if(samochod.getSilnik().getMaxObroty()-samochod.getSilnik().getObroty()<500) {
+                samochod.getSilnik().zwiekszObroty(samochod.getSilnik().getMaxObroty()-samochod.getSilnik().getObroty());
+            }else{
+                samochod.getSilnik().zwiekszObroty(500);
+            }
+
+        }
+        refresh();
+    }
+
+    public void onUjmijGazu(ActionEvent actionEvent) {
+        if (!samochod.getSkrzynia().getSprzeglo().getStanSprzegla() && samochod.getSkrzynia().getAktualnyBieg() != 0){
+            if (samochod.getSilnik().getObroty()-samochod.getSilnik().getMinObroty()<500){
+                samochod.getSilnik().zmniejszObroty(samochod.getSilnik().getObroty()-samochod.getSilnik().getMinObroty());
+            }else {
+                samochod.getSilnik().zmniejszObroty(500);
+            }
+
+        }
+        refresh();
+    }
+
+    public void onSprzegloNacisnij(ActionEvent actionEvent) {
+        samochod.getSkrzynia().getSprzeglo().wcisnij();
+        refresh();
+    }
+
+    public void onSprzegloZwolnij(ActionEvent actionEvent) {
+        samochod.getSkrzynia().getSprzeglo().zwolnij();
+        refresh();
+    }
 }

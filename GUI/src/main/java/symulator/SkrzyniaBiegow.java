@@ -11,13 +11,14 @@ public class SkrzyniaBiegow extends Komponent{
         this.aktualnyBieg = 0;
         this.iloscBiegow = 5;
         this.sprzeglo = sprzeglo;
-        this.aktualnePrzelozenie = 10;
+        this.aktualnePrzelozenie = 0;
     }
 
     public void zwiekszBieg(){
         if(sprzeglo.getStanSprzegla()){
             if (aktualnyBieg<iloscBiegow){
                 aktualnyBieg++;
+                aktualnePrzelozenie = (float) aktualnyBieg/iloscBiegow;
             }
         }
     }
@@ -25,6 +26,7 @@ public class SkrzyniaBiegow extends Komponent{
         if (sprzeglo.getStanSprzegla()){
             if (aktualnyBieg>=1){
                 aktualnyBieg--;
+                aktualnePrzelozenie = (float) aktualnyBieg/iloscBiegow;
             }
         }
     }
@@ -38,5 +40,9 @@ public class SkrzyniaBiegow extends Komponent{
 
     public Sprzeglo getSprzeglo() {
         return sprzeglo;
+    }
+
+    public int getIloscBiegow() {
+        return iloscBiegow;
     }
 }

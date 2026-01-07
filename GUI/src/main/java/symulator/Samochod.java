@@ -20,19 +20,25 @@ public class Samochod {
     }
 
     public void wlacz(){
-        this.silnik.uruchom();
+        if (skrzynia.getSprzeglo().getStanSprzegla() && skrzynia.getAktualnyBieg()==0){
+            this.silnik.uruchom();
+        }
     }
     public void wylacz(){
-        this.silnik.zatrzymaj();
-    }
-    public void jedzDo(Pozycja cel){
-
+        if (skrzynia.getAktualnyBieg()==0){
+            this.silnik.zatrzymaj();
+        }
     }
     public float getWaga(){
         return skrzynia.getWaga()+silnik.getWaga()+700;
     }
     public float getAktPredkosc(){
-        return skrzynia.getAktualnePrzelozenie()*skrzynia.getAktualnyBieg();
+        float predkosc = predkoscMax*skrzynia.getAktualnePrzelozenie()*silnik.getObroty()/silnik.getMaxObroty();
+        if (predkosc>predkoscMax){
+            return predkoscMax;
+        }else {
+            return predkosc;
+        }
     }
 
     public Pozycja getAktualnaPozycja() {
@@ -43,5 +49,14 @@ public class Samochod {
     }
     public Silnik getSilnik() {
         return silnik;
+    }
+    public String getNrRejest() {
+        return nrRejest;
+    }
+    public String getModel() {
+        return model;
+    }
+    public float getPredkoscMax() {
+        return predkoscMax;
     }
 }
