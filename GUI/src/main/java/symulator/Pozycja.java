@@ -14,11 +14,18 @@ public class Pozycja {
         return new Pozycja(x,y);
     }
 
+    public double getX(){
+        return x;
+    }
+    public double getY(){
+        return y;
+    }
+
     public void przemieszczenie(Pozycja cel, float predkosc){
         double dt=0.1;
         double x=cel.x-this.x;
         double y=cel.y-this.y;
-        double alfa=atan(x/y);
+        double alfa = Math.atan2(x, y);
         double ds=predkosc*dt;
         double s = sqrt(pow(x,2)+ pow(y,2));
         double dx=sin(alfa)*ds;
@@ -31,23 +38,6 @@ public class Pozycja {
             this.x=cel.x;
             this.y=cel.y;
         }
-
-        /*int powtorzenia = (int) floor(s/ds);
-
-        for (int i=0; i<powtorzenia; i++){
-            this.x+=dx;
-            this.y+=dy;
-            //System.out.println("Pozycja "+i+": "+this.x+","+this.y);
-        }
-        if (this.x!=cel.x||this.y!=cel.y){
-            this.x=cel.x;
-            this.y=cel.y;
-            //System.out.println("Pozycja: "+this.x+","+this.y);
-        }*/
-
-
-
-
 
     }
 }

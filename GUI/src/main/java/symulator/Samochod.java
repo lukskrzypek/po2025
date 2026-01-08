@@ -1,6 +1,9 @@
 package symulator;
 
-public class Samochod {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Samochod extends Thread{
     private boolean stanWlaczenia;
     private String nrRejest;
     private String model;
@@ -8,6 +11,7 @@ public class Samochod {
     private Pozycja aktualnaPozycja;
     private Silnik silnik;
     private SkrzyniaBiegow skrzynia;
+    private Pozycja cel;
 
     public Samochod(String nrRejest, String model, float predkoscMax, Pozycja aktualnaPozycja, Silnik silnik, SkrzyniaBiegow skrzynia) {
         this.nrRejest = nrRejest;
@@ -17,7 +21,49 @@ public class Samochod {
         this.silnik = silnik;
         this.skrzynia = skrzynia;
         this.stanWlaczenia = false;
+        this.start();
     }
+
+    public void jedzDo(Pozycja nowyCel) {
+        this.cel = nowyCel;
+    }
+
+    private List<Listener> listeners = new ArrayList<>();
+
+    public void addListener(Listener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(Listener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyListeners() {
+        for (Listener listener : listeners) {
+            listener.update();
+        }
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            if (cel != null) {
+                this.aktualnaPozycja.przemieszczenie(cel, (float) getAktPredkosc());
+                // Sprawdzenie czy nasza pozycja to pozycja docelowa
+                if (this.aktualnaPozycja.getX() == cel.getX() && this.aktualnaPozycja.getY() == cel.getY()) {
+                    cel = null; // Zatrzymanie
+                }
+                notifyListeners();
+            }
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
+    }
+
 
     public void wlacz(){
         if (skrzynia.getSprzeglo().getStanSprzegla() && skrzynia.getAktualnyBieg()==0){
@@ -33,6 +79,7 @@ public class Samochod {
         return skrzynia.getWaga()+silnik.getWaga()+700;
     }
     public float getAktPredkosc(){
+        //Predkosc obliczana z przelozenia i obrotow
         float predkosc = predkoscMax*skrzynia.getAktualnePrzelozenie()*silnik.getObroty()/silnik.getMaxObroty();
         if (predkosc>predkoscMax){
             return predkoscMax;

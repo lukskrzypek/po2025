@@ -1,5 +1,7 @@
 package org.example.gui;
 
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,14 +15,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import symulator.*;
 
 import java.io.IOException;
 
 
-public class CarGui {
+public class CarGui implements Listener {
 
+    @FXML private Pane paneMapa;
+    @FXML private VBox vboxCar;
     @FXML private ImageView imageCarView;
     @FXML private ComboBox<Samochod> comboBoxSamochody;
 
@@ -51,8 +57,6 @@ public class CarGui {
 
     @FXML public void initialize() {
         Image carImage = new Image(getClass().getResource("/images/car.png").toExternalForm());
-
-        System.out.println("Image width: " + carImage.getWidth() + ", height: " + carImage.getHeight());
         imageCarView.setImage(carImage);
 
         imageCarView.setFitWidth(100);
@@ -68,7 +72,12 @@ public class CarGui {
             samochod = comboBoxSamochody.getSelectionModel().getSelectedItem();
             refresh();
                     });
-
+        //poruszanie sie samochodu
+        paneMapa.setOnMouseClicked(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            samochod.jedzDo(new Pozycja(x, y));
+        });
     }
 
     public void onWlacz(ActionEvent actionEvent) {
@@ -102,6 +111,11 @@ public class CarGui {
         textSilnikWaga.setText(String.valueOf(samochod.getSilnik().getWaga()));
         textSilnikObroty.setText(String.valueOf(samochod.getSilnik().getObroty()));
 
+        Platform.runLater(() -> {
+            vboxCar.setTranslateX(samochod.getAktualnaPozycja().getX());
+            vboxCar.setTranslateY(samochod.getAktualnaPozycja().getY());
+        });
+
     }
 
     public void openAddCarWindow() throws IOException {
@@ -118,12 +132,16 @@ public class CarGui {
     }
 
     public void onUsunSamochod(ActionEvent actionEvent) {
+        if (samochod != null) {
+            samochod.removeListener(this);
+        }
         samochody.remove(samochod);
         comboBoxSamochody.getSelectionModel().selectFirst();
         refresh();
     }
 
     public void dodajSamochod(Samochod nowySamochod) {
+        nowySamochod.addListener(this);
         samochody.add(nowySamochod);
         comboBoxSamochody.getSelectionModel().select(nowySamochod);
         refresh();
@@ -161,7 +179,7 @@ public class CarGui {
                     silnik.zwiekszObroty(doceloweObroty-silnik.getObroty());
                 }
             } else if (skrzynia.getAktualnyBieg()==1) {
-                if (silnik.getObroty() >= silnik.getMinObroty() && silnik.getObroty() <= silnik.getMinObroty()+500){
+                if (silnik.getObroty() >= 0 && silnik.getObroty() <= silnik.getMinObroty()+500){
                     skrzynia.zmniejszBieg();
                     silnik.zmniejszObroty(silnik.getObroty()-silnik.getMinObroty());
                 }
@@ -201,6 +219,11 @@ public class CarGui {
 
     public void onSprzegloZwolnij(ActionEvent actionEvent) {
         samochod.getSkrzynia().getSprzeglo().zwolnij();
+        refresh();
+    }
+
+    @Override
+    public void update() {
         refresh();
     }
 }
