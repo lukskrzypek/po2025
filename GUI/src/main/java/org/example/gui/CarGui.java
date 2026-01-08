@@ -1,6 +1,5 @@
 package org.example.gui;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -127,6 +126,10 @@ public class CarGui implements Listener {
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
+
+        stage.setWidth(350);
+        stage.setHeight(500);
+
         stage.setTitle("Dodaj nowy samochód");
         stage.show();
     }

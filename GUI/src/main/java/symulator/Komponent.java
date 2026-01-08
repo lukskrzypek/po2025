@@ -20,4 +20,10 @@ public abstract class Komponent {
     public float getCena() {
         return cena;
     }
+
+    //metoda do wyswietlnia nazwy w aplikacji
+    @Override
+    public String toString() {
+        return this.nazwa;
+    }
 }

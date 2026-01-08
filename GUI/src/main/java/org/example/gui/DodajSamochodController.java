@@ -56,11 +56,11 @@ public class DodajSamochodController {
     private void onConfirmButton() {
         String model = modelTextField.getText();
         String registration = registrationTextField.getText();
-        double weight;
+        float weight;
         int speed;
 
         try {
-            weight = Double.parseDouble(weightTextField.getText());
+            weight = Float.parseFloat(weightTextField.getText());
             speed = Integer.parseInt(speedTextField.getText());
         } catch (NumberFormatException e) {
             System.out.println("Niepoprawne dane. Spróbuj ponownie.");
@@ -72,11 +72,13 @@ public class DodajSamochodController {
         SkrzyniaBiegow wybranaSkrzynia = gearboxComboBox.getValue();
         Pozycja pozycja = new Pozycja(0,0);
 
-        Samochod samochod = new Samochod(registration,model,speed,pozycja,wybranySilnik,wybranaSkrzynia);
-        mainController.dodajSamochod(samochod);
+        if (weight> wybranySilnik.getWaga()+wybranaSkrzynia.getWaga()+wybranaSkrzynia.getSprzeglo().getWaga()){
+            Samochod samochod = new Samochod(registration,model,speed,pozycja,wybranySilnik,wybranaSkrzynia, weight);
+            mainController.dodajSamochod(samochod);
 
-        Stage stage = (Stage) confirmButton.getScene().getWindow();
-        stage.close();
+            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     @FXML

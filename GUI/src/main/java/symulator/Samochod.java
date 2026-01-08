@@ -12,8 +12,9 @@ public class Samochod extends Thread{
     private Silnik silnik;
     private SkrzyniaBiegow skrzynia;
     private Pozycja cel;
+    private float waga;
 
-    public Samochod(String nrRejest, String model, float predkoscMax, Pozycja aktualnaPozycja, Silnik silnik, SkrzyniaBiegow skrzynia) {
+    public Samochod(String nrRejest, String model, float predkoscMax, Pozycja aktualnaPozycja, Silnik silnik, SkrzyniaBiegow skrzynia, float waga) {
         this.nrRejest = nrRejest;
         this.model = model;
         this.predkoscMax = predkoscMax;
@@ -21,7 +22,7 @@ public class Samochod extends Thread{
         this.silnik = silnik;
         this.skrzynia = skrzynia;
         this.stanWlaczenia = false;
-        this.start();
+        this.waga = waga;
     }
 
     public void jedzDo(Pozycja nowyCel) {
@@ -76,7 +77,7 @@ public class Samochod extends Thread{
         }
     }
     public float getWaga(){
-        return skrzynia.getWaga()+silnik.getWaga()+700;
+        return waga;
     }
     public float getAktPredkosc(){
         //Predkosc obliczana z przelozenia i obrotow
@@ -105,5 +106,11 @@ public class Samochod extends Thread{
     }
     public float getPredkoscMax() {
         return predkoscMax;
+    }
+
+    //wyswietlanie poprawnej nazwy
+    @Override
+    public String toString() {
+        return this.model;
     }
 }
