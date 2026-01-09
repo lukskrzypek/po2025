@@ -23,6 +23,7 @@ public class Samochod extends Thread{
         this.skrzynia = skrzynia;
         this.stanWlaczenia = false;
         this.waga = waga;
+        this.start();
     }
 
     public void jedzDo(Pozycja nowyCel) {
@@ -56,7 +57,6 @@ public class Samochod extends Thread{
                 }
                 notifyListeners();
             }
-
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -82,11 +82,7 @@ public class Samochod extends Thread{
     public float getAktPredkosc(){
         //Predkosc obliczana z przelozenia i obrotow
         float predkosc = predkoscMax*skrzynia.getAktualnePrzelozenie()*silnik.getObroty()/silnik.getMaxObroty();
-        if (predkosc>predkoscMax){
-            return predkoscMax;
-        }else {
-            return predkosc;
-        }
+        return predkosc;
     }
 
     public Pozycja getAktualnaPozycja() {
